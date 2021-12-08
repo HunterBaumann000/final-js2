@@ -1,46 +1,93 @@
 Vue.component('ArtPieceCard', {
     props: {
+        artworkId: {
+            type: Number,
 
+        },
+        currentArtwork: {
+            type: [],
+
+        },
+        modalActive: {
+            type: Boolean,
+        },
+        isSaved: {
+            type:Boolean,
+        }
     },
 
     methods: {
 
+        saveToCollection() {
+
+            const artwork = {
+                Id: this.artworkId,
+                details: this.currentArtwork,
+            };
+
+            alert(artwork.details.title + " has been saved!");
+            this.$emit('save-artwork', artwork);
+        },
+
+        removeFromCollection() {
+            this.$emit('remove-Artwork')
+        },
+
+
+        getArtDetails() {
+            //artwork URL
+            let ArtworkURL = "https://api.artic.edu/api/v1/artworks/" + (this.artworkId).toString() ;
+
+            //fetch request for artwork data
+            fetch(ArtworkURL)
+                .then(res => res.json()).then(res => {
+                this.currentArtwork = res.data;
+            });
+        },
+    },
+
+    created: function(){
+        this.getArtDetails();
     },
 
     template: `
-        <v-card
-    :loading="loading"
-    class="mx-auto my-12"
-    max-width="374"
-  >
-    <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template>
-
-    <v-img
-      height="250"
-      src="https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
-    ></v-img>
-
-    <v-card-title>{{artworkTitle}}</v-card-title>
-
-    <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >     
-      </v-row>
-
-      <div class="my-4 text-subtitle-1">
-         {{}}
-      </div>
-
-      <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
-    </v-card-text>
+        <div>
+          <v-card color="gray" width="300px">
+            <v-card-title>{{currentArtwork.title}}</v-card-title>
+                <div>
+                <!-- gets image link with image ID-->
+                    <v-img :src="'https://www.artic.edu/iiif/2/' + currentArtwork.image_id + '/full/843,/0/default.jpg'" height="200px"/>
+                </div>
+            <v-card-subtitle>
+                Artist: {{currentArtwork.artist_title}}
+                <br>
+            </v-card-subtitle>
+            <hr>
+            <v-card-subtitle>
+                <row>
+                    <!-- Saves Art to User Collection if Not Saved Already-->
+                    <v-btn small
+                    color="primary"
+                        v-if="!isSaved"
+                        v-on:click="saveToCollection"
+                    >Save</v-btn>
+                    
+                    <v-btn small
+                        v-if="isSaved"
+                        v-on:click="$emit('delete-item')"
+                    >Delete</v-btn>
+                   
+                    <!-- Button and Modal are Tied Together -->
+                    <ArtDescriptionModal
+                    :artwork-id="artworkId"
+                    :current-artwork="currentArtwork"
+                        v-on:click="modalActive=true"    
+                    ></ArtDescriptionModal> 
+                 
+                </row>
+            </v-card-subtitle>
+          </v-card>
+          </div>
     `
 
 });

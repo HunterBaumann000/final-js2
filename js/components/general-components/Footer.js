@@ -10,131 +10,64 @@ Vue.component('CustomFooter', {
         }
     },
 
+    data: () => ({
+
+        footerItems:{
+            facebook:{
+                text:'Facebook',
+                url:'https://www.facebook.com/artic/'
+            },
+            instagram:{
+                text: 'Instagram',
+                url:'https://www.instagram.com/artinstitutechi/?hl=en'
+            },
+            apiDoc:{
+                text: 'API',
+                url:'https://api.artic.edu/docs/#scraping-images'
+            },
+            about:{
+                text: 'About',
+                url:'https://www.artic.edu/visit#faqs'
+            },
+            contact:{
+                text: 'Contact',
+                url:'https://www.artic.edu/visit#hours'
+            }
+        },
+    }),
+
     methods: {
 
     },
 
     template: `
-      <v-footer height="auto">
-            <v-flex xs3 layout column pr-1>
-              <span class="title ">CONTACT</span>
-              <hr width="90%">
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Loan Officer
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Branch Near You
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-building</v-icon>
-                750 S Main St. Bountiful, UT 84010
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-envelope</v-icon>
-                info@city1st.com
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-phone</v-icon>
-                801-299-1770
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-print</v-icon>
-                 801-299-1769
-              </div>
-            </v-flex>
-            
-             <v-flex xs3 layout column pr-1>
-              <span class="title ">Media</span>
-              <hr width="90%">
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Loan Officer
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Branch Near You
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-building</v-icon>
-                750 S Main St. Bountiful, UT 84010
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-envelope</v-icon>
-                info@city1st.com
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-phone</v-icon>
-                801-299-1770
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-print</v-icon>
-                 801-299-1769
-              </div>
-            </v-flex>
-                        
-            <v-flex xs3 layout column pr-1>
-              <span class="title ">About Us</span>
-              <hr width="90%">
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Loan Officer
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Branch Near You
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-building</v-icon>
-                750 S Main St. Bountiful, UT 84010
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-envelope</v-icon>
-                info@city1st.com
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-phone</v-icon>
-                801-299-1770
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-print</v-icon>
-                 801-299-1769
-              </div>
-            </v-flex>
-            <v-flex xs3 layout column pr-1>
-              <span class="title ">Resources</span>
-              <hr width="90%">
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Loan Officer
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-map-marker-alt</v-icon>
-                Find a Branch Near You
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-building</v-icon>
-                750 S Main St. Bountiful, UT 84010
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-envelope</v-icon>
-                info@city1st.com
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-phone</v-icon>
-                801-299-1770
-              </div>
-              <div>
-                <v-icon size="18px" class="mr-3 white--text">fas fa-print</v-icon>
-                 801-299-1769
-              </div>
-            </v-flex>
-          
-            <v-col class="text-center light grey" cols="12">
-                {{ footerDate }} - <strong> {{ footerText }} </strong>
-            </v-col>
+      <v-footer
+      dark
+      padless
+    >
+      <v-card
+        width="100%"
+        flat
+        tile
+        class="white--text text-center"
+      >
       
+        <v-card-text>
+          <v-btn
+            v-for="item in footerItems"
+            class="mx-4 white--text"
+            :href='item.url'
+          >
+            {{item.text}}
+          </v-btn>
+        </v-card-text>
+        <v-divider class="blue"></v-divider>
+    
+        <v-card-text class="white--text">
+          {{ new Date().getFullYear() }} &copy Chicago Art Institute
+        </v-card-text>
+        
+      </v-card>
     </v-footer>
     `
 });

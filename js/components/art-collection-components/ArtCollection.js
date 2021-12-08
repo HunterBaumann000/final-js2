@@ -4,41 +4,28 @@ Vue.component('ArtCollection', {
     data() {
         return {
             q: '',
-            maxResults: 36,
-            //mediaType: 'all',
+            limit: 150,
             results: [],
-            noResults: false,
-            //searching: false,
-            //itemsAreDisplayed: false,
-            imageURL: '',
+            noResults: true,
+            searching: false,
+            itemsAreDisplayed: false,
         }
     },
     methods: {
 
-        //issue is how im searching for the artwork. artwork will show if queries from just art works
-
-
         getSearchTerm(term) {
             this.searching = true;
+            //URL for image with user query
+            let URL = "https://api.artic.edu/api/v1/artworks/search?q=" + term.toString() + "&limit=50";
 
-            let URL = "https://api.artic.edu/api/v1/artworks?fields=id,";
-
-            const params = {
-                q: term,
-                limit: 100,
-            }
-            const options = {
-                method: 'POST',
-                body: JSON.stringify(params)
-            };
-
-            fetch(URL + term.toString())
+            fetch(URL)
                 .then(res => res.json()).then(res => {
-                this.results = res.data;
-                // this.searching = false;
-                // this.itemsAreDisplayed = true;
-                // this.config = res.config;
-                // this.noResults = this.results.length === 0;
+                    console.log(res.data)
+                    this.results = res.data;
+                    this.searching = false;
+                    this.itemsAreDisplayed = true;
+                    this.noResults = this.results.length === 0;
+                    this.q = term;
 
             });
         },
@@ -46,20 +33,31 @@ Vue.component('ArtCollection', {
 
     template: `
       <div>
-        <br> <br>
+        <div id="searchbarArea" class="mt-8" style="text-align: center">
+            <h1 class="mb-5">Artwork Search</h1>
          <SearchBar @search-term="getSearchTerm"></SearchBar>
-         <hr>
-         <br>
-         <v-container fluid>
-            <div v-for="result in results" v-bind:key="result.id">
-                <div>{{result.title}} {{result.last_updated}}</div>
-                <div>{{result.artist_title}}</div>
-                <v-img :src="'https://www.artic.edu/iiif/2/' + result.image_id + '/full/843,/0/default.jpg'">
-              
-                
-            </div>
+         <v-container> 
+            <p v-if="searching"> searching... </p>
+            <p v-if="itemsAreDisplayed"> Displaying {{results.length}} results related to "{{q}}" </p>
          </v-container>
-      </div>
+         </div>
+         <hr>
+        
+         <v-container v-if="noResults"> No results! Try searching for something..</v-container>
+         
+    <v-container fluid grid-list-xl>
+      <v-layout wrap justify-space-around>
+        
+        <v-flex v-for="result in results" v-bind:key="result.id">
+        
+        <art-piece-card
+            :artwork-id="result.id"
+        ></art-piece-card>
+
+          </v-flex>
+      </v-layout>
+    </v-container>
+    </div>
         
 <!--        1. IIIF Image API endpoint in the config.iiif_url field-->
 <!--        2. Append the image_id of the artwork as a segment to this URL-->
@@ -68,10 +66,6 @@ Vue.component('ArtCollection', {
 <!--        https://www.artic.edu/iiif/2 + 1adf2696-8489-499b-cad2-821d7fde4b33 + /full/843,/0/default.jpg-->
 <!--        https://www.artic.edu/iiif/2/1adf2696-8489-499b-cad2-821d7fde4b33/full/843,/0/default.jpg-->
 <!--        Identifier looks like: bd4991b1-dd2c-da63-d259-14d908e00644 -->
-
-
-      
-      
     `
 
 });

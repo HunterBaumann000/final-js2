@@ -8,33 +8,27 @@ Vue.component('SearchBar', {
     methods: {
 
         SearchArt() {
+            //emits user's search term
             this.$emit('search-term', this.searchTerm)
         }
     },
 
     template: `
       
-      <v-container>
-    <v-row mt="5">
-      <v-col
-        cols="9"
-      >
+   <v-container class="x-16">
+    <v-row>
         <v-text-field
-            outlined
-            label="Search For Artwork"
-            v-model="searchTerm"
-          ></v-text-field>
-          </v-col>
-          
-        <v-col
-            cols="3"
-           
-        <SubmitButton
-              button-text="Search"
-              @submit-Btn="SearchArt"
-          >
-          </SubmitButton>
-          </v-col>
+              filled outlined 
+              label="Search For Artwork"
+              v-model="searchTerm"
+            ></v-text-field> 
+            
+            <v-btn 
+                x-large
+                v-on:click="SearchArt"
+                >
+                <v-icon>search</v-icon>
+            </v-btn>
     </v-row>
    
     </v-container>

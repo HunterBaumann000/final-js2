@@ -1,5 +1,17 @@
-Vue.component('Card', {
+Vue.component('CustomCard', {
     props: {
+        cardTitle: {
+            type: String,
+            required: true
+        },
+        cardImage: {
+            type: String,
+            required: true
+        },
+        cardDesc: {
+            type: String,
+            required: true
+        }
 
     },
 
@@ -22,11 +34,12 @@ Vue.component('Card', {
     </template>
 
     <v-img
-      height="250"
-      src="https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
+      height="300"
+      :key="i"
+       v-bind:src="cardImage"
     ></v-img>
 
-    <v-card-title>{{}} Blah Blah</v-card-title>
+    <v-card-title>{{cardTitle}}</v-card-title>
 
     <v-card-text>
       <v-row
@@ -34,12 +47,12 @@ Vue.component('Card', {
         class="mx-0"
       >     
       </v-row>
-
+      
       <div class="my-4 text-subtitle-1">
-         Blah Blah
+      <hr class="mb-2">
+         {{cardDesc}}
       </div>
 
-      <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
     </v-card-text>
     `
 

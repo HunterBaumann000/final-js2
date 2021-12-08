@@ -9,34 +9,16 @@ Vue.component('NavigationBar', {
 
 
     template: `
-<!--        -->
-<!--        <ul class="list-unstyled components">-->
-<!--            <li><router-link to="/home">Home</router-link></li>-->
-<!--            <li><router-link to="/my-potlucks">My Potlucks</router-link></li>-->
-<!--            <li><router-link to="/create">Create</router-link></li>-->
-<!--            <li><router-link to="/potlucks">Potlucks</router-link></li>-->
-<!--            <li><router-link to="/archive">Archive</router-link></li>-->
-<!--            <li v-if="authUser"><a href="#" @click.prevent="logout">Logout</a></li>-->
-<!--            <li v-else><a href="#" @click.prevent="login">Login</a></li>-->
-<!--        </ul>-->
 
-    <v-toolbar>
-      <v-toolbar-title>Chicago Art Museum</v-toolbar-title>
+        <v-app-bar dark>
+          <v-toolbar-title class="white--text">Chicago Art Institute</v-toolbar-title>
+          <v-spacer></v-spacer>
+            <router-link class="white--text" to="/home"><v-btn plain> Home </v-btn></router-link>
+            <router-link class="white--text" to="/search-artwork"><v-btn plain> Search Page </v-btn></router-link></v-btn>
+            <router-link class="white--text" to="/my-saved"><v-btn plain> My Saved Art </v-btn></router-link></v-btn>
+            <router-link class="white--text" to="/posts-page"><v-btn plain> Post Board </v-btn></router-link></v-btn>
+        </v-app-bar>
       
-      <v-spacer></v-spacer>
-      
-      <v-toolbar-items id="navbarItemPosition" class="text-xs-right">
-      
-        <v-btn><router-link to="/home">Home</router-link></v-btn>
-        <v-btn ><router-link to="/search-artwork">Search Page</router-link></v-btn>
-        <v-btn ><router-link to="/my-saved">My Saved Art</router-link></v-btn>
-        <v-btn ><router-link to="/QnA">QnA</router-link></v-btn>
-   
-      </v-toolbar-items>
-      
-    </v-toolbar>
-    
-    
     `
 
 });

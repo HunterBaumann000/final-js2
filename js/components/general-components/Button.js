@@ -13,15 +13,13 @@ Vue.component('SubmitButton', {
     },
 
     template: `
-      <div class="my-2">
       <v-btn 
-             type="submit"
+             dark x-large
              color="purple"
              @click.prevent="doTask"
-             block dark x-large>
+             >
         {{buttonText}}
       </v-btn>
-      </div>
     `
 
 });

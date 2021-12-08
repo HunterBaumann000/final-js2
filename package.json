@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "@mdi/font": "^6.5.95"
   }
 }
